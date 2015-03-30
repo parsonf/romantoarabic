@@ -7,10 +7,12 @@ import java.io.InputStreamReader;
 public class RomanToArabicMain implements Runnable {
     private String input;
     private boolean isVerbose;
+    private Translator translator;
 
     public RomanToArabicMain() {
         input = "";
         isVerbose = false;
+        translator = new Translator();
     }
 
     public void run() {
@@ -45,7 +47,9 @@ public class RomanToArabicMain implements Runnable {
                     System.out.println("Output of translate set to verbose. Type 'quiet' to see result only.");
                 break;
             case "translate":
-                    System.out.println("TODO " + argument); // TODO
+                    System.out.println("Translating " + argument + " to Arabic numeral...");
+                    translator.translate(argument);
+                    System.out.println("Result: " + translator.getArabic());
                 break;
             case "exit":
                     System.out.println("Exiting program...");
