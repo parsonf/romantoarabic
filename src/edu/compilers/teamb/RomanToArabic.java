@@ -1,6 +1,7 @@
 package edu.compilers.teamb;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 public class RomanToArabic {
 
@@ -14,5 +15,9 @@ public class RomanToArabic {
         validTokens.add("D");
         validTokens.add("M");
         return validTokens;
+    }
+
+    public static Dictionary<ParseTableCell, Production> getParseTable() {
+        return null;
     }
 }
