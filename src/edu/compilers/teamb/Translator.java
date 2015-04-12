@@ -24,9 +24,13 @@ public class Translator {
     }
 
     private void translate() {
-        lexicalAnalyzer.analyze(roman);
+        try {
+            lexicalAnalyzer.analyze(roman);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         ArrayList<Token> tokens = lexicalAnalyzer.getTokens();
-        // TODO use tokens, and the rest
-
+        System.out.println(tokens);
     }
 }

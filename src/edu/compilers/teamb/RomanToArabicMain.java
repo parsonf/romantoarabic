@@ -55,7 +55,7 @@ public class RomanToArabicMain implements Runnable {
                     System.out.println("Exiting program...");
                 break;
             default:
-                System.out.println("Syntax error.");
+                System.err.println("Syntax error.");
                 printAcceptableCommands();
         }
     }

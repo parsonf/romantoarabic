@@ -1,6 +1,8 @@
 package edu.compilers.teamb;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * LexicalAnalyzer.
@@ -27,19 +29,43 @@ import java.util.ArrayList;
  *
  */
 public class LexicalAnalyzer {
-    private String input;
+    private Stack<Character> stack;
     private ArrayList<Token> tokens;
 
     public LexicalAnalyzer() {
         tokens = new ArrayList<>();
+        stack = new Stack<>();
     }
 
-    public void analyze(String input) {
+    public void analyze(String input) throws Exception {
         tokens.clear();
-        this.input = input;
+        convertInputToStack(input);
+        String analyzing = "";
+        while (!stack.isEmpty()) {
+            // read next token of input
+            analyzing += stack.pop();
+            for(String s : RomanToArabic.getValidTokens()) {
+                if (analyzing.equals(s)) {
+                    tokens.add(new Token(analyzing));
+                    analyzing = "";
+                    break;
+                }
+            }
+        }
+        // the stack is empty...but did we identify everything??
+        if (!analyzing.isEmpty()) {
+            throw new Exception("Could identify a token for " + analyzing + ".  Problem is likely at '" + analyzing.charAt(0) + "'.");
+        }
+    }
 
-        // TODO : lexical analysis
-
+    private void convertInputToStack(String s) {
+        // start from the end, work towards the front
+        // push it all onto the stack.
+        StringBuilder sb = new StringBuilder(s).reverse();
+        s = sb.toString();
+        for( int i = 0; i < s.length(); i++) {
+            stack.push(s.charAt(i));
+        }
     }
 
     public ArrayList<Token> getTokens() {
