@@ -1,17 +1,18 @@
 package edu.compilers.teamb;
 
-import java.util.ArrayList;
 
 public class Translator {
     private String roman;
-    private String arabic;
+    private int arabic;
 
     private LexicalAnalyzer lexicalAnalyzer;
     private Parser parser;
+    private IntermediateCodeGenerator intermediateCodeGenerator;
+    private Evaluator evaluator;
 
     public Translator() {
         this.roman = "";
-        this.arabic = "NOT SET";
+        this.arabic = 0;
         lexicalAnalyzer = new LexicalAnalyzer();
         parser = new Parser();
     }
@@ -22,7 +23,7 @@ public class Translator {
     }
 
     public String getArabic() {
-        return arabic;
+        return Integer.toString(arabic);
     }
 
     private void translate() {
@@ -38,5 +39,10 @@ public class Translator {
         // create a parse tree
         parser.parse(lexicalAnalyzer.getTokens());
 
+        // generate intermediate code
+        intermediateCodeGenerator.generate(parser.getParseTree());
+
+        // evaluate by executing the intermediate code
+        arabic = evaluator.evaluate(intermediateCodeGenerator.getCode());
     }
 }
