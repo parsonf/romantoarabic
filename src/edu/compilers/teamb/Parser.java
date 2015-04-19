@@ -2,13 +2,13 @@ package edu.compilers.teamb;
 
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Stack;
 
 public class Parser {
     private ArrayList<Token> tokens;
     private Node parseTree;
-    private Dictionary<ParseTableCell, Production> parseTable;
+    private Hashtable<ParseTableCell, Production> parseTable;
 
     public Parser () {
         tokens = null;
