@@ -29,6 +29,9 @@ import java.util.Stack;
  *
  */
 public class LexicalAnalyzer {
+    public static final String TAG = "Lexical Analyzer";
+
+    private ArrayList<String> translationSteps = new ArrayList<>();
     private Stack<Character> stack;
     private ArrayList<Token> tokens;
 
@@ -37,16 +40,20 @@ public class LexicalAnalyzer {
         stack = new Stack<>();
     }
 
-    public void analyze(String input) throws Exception {
+    public void analyze(String input) throws RomanTranslationException {
         tokens.clear();
+        translationSteps.add("Converting input stack.");
         convertInputToStack(input);
         String analyzing = "";
+
         while (!stack.isEmpty()) {
             // read next token of input
             analyzing += stack.pop();
+            translationSteps.add(String.format("Analyzing {%s}", analyzing));
             for(String s : RomanToArabic.getValidTokens()) {
                 if (analyzing.equals(s)) {
                     tokens.add(new Token(analyzing));
+                    translationSteps.add(String.format("Token found {%s}", analyzing));
                     analyzing = "";
                     break;
                 }
@@ -54,7 +61,8 @@ public class LexicalAnalyzer {
         }
         // the stack is empty...but did we identify everything??
         if (!analyzing.isEmpty()) {
-            throw new Exception("Could identify a token for " + analyzing + ".  Problem is likely at '" + analyzing.charAt(0) + "'.");
+            translationSteps.add(String.format("Stack empty, but no token found for {%s}.", analyzing));
+            throw new RomanTranslationException(TAG,"Could not identify a token for " + analyzing + ".  Problem is likely at '" + analyzing.charAt(0) + "'.");
         }
     }
 
@@ -65,13 +73,14 @@ public class LexicalAnalyzer {
         s = sb.toString();
         for( int i = 0; i < s.length(); i++) {
             stack.push(s.charAt(i));
+            translationSteps.add(String.format("Pushed {%s} onto stack.", s.charAt(i)));
         }
     }
 
     public ArrayList<Token> getTokens() {
         return tokens;
     }
-
+    public ArrayList<String> getTranslationSteps() { return translationSteps; }
 
 
 }
