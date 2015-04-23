@@ -212,6 +212,6 @@ public class RomanToArabic {
         parseTable.put(new ParseTableCell("k6","M"), new Production("k6","ERROR"));
         parseTable.put(new ParseTableCell("k6","$"), new Production("k6",""));
 
-        return null;
+        return parseTable;
     }
 }
