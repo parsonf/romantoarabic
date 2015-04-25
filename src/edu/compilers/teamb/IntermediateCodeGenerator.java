@@ -6,19 +6,36 @@ import java.util.ArrayList;
 public class IntermediateCodeGenerator {
     public static final String TAG = "IC Generator";
     private ArrayList<String> translationSteps = new ArrayList<>();
-    private Node parseTree;
     private ArrayList<ICStep> code;
+    private Node parseTree;
     private IntermediateCode intermediateCode;
 
     public IntermediateCodeGenerator() {
         parseTree = null;
-        code = null;
         intermediateCode = null;
+        code = new ArrayList<>();
     }
 
-    public void generate(Node node) throws RomanTranslationException {
-        this.parseTree = node;
-        throw new RomanTranslationException(TAG, "Not implemented.");
+    public void generate(Node _parseTree) throws RomanTranslationException {
+        this.parseTree = _parseTree;
+        traverse(_parseTree);
+
+        translationSteps.add("Intermediate code generated:");
+        for (ICStep step : code) {
+            translationSteps.add(step.toString());
+        }
+    }
+
+    private void traverse(Node node) {
+        if (!node.getChildren().isEmpty()) {
+            for (Node child : node.getChildren()) {
+                traverse(child);
+            }
+        }
+        if (node == parseTree) {
+            return;
+        }
+        code.add(new ICStep(node.getParent().getVar(), node.getParent().getVar(), node.getVar(), IntermediateCode.Action.ADD));
     }
 
     public ArrayList<ICStep> getCode() {

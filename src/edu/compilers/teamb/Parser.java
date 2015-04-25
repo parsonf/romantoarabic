@@ -30,21 +30,27 @@ public class Parser {
         if (lex.equals("$")) {
             return; // we're done.
         }
-        if (n.getValue().equals("ERROR")) {
+        if (n.getVar().getName().equals("ERROR")) {
             throw new RomanTranslationException(TAG, "parsing error");
-        } else if(n.getValue().equals("")) {
+        } else if(n.getVar().getName().equals("")) {
             // empty string produced, do nothing
-        } else if(n.getValue().equals(lex)) {
+        } else if(n.getVar().getName().equals(lex)) {
             // this is our terminal.
             lexemes.pop();
             // no further action needed. next.
         } else {
             // so we've got a non-terminal.
-            Production production = parseTable.get(new ParseTableCell(n.getValue(), lex));
+            Production production = parseTable.get(new ParseTableCell(n.getVar().getName(), lex));
             String[] body = production.getBody().split("\\s");
             // add production as children to node.
+            int i = 0;
             for (String aBody : body) {
-                n.addChild(aBody);
+                if (production.getInitVals().length == body.length) {
+                    n.addChild(aBody, production.getInitVals()[i]);
+                } else {
+                    n.addChild(aBody);
+                }
+                i++;
             }
             // parse each node.
             for(Node child : n.getChildren()) {

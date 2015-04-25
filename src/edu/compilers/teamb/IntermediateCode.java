@@ -15,11 +15,4 @@ public class IntermediateCode {
 
 
 
-    public void asdf() {
-        ICStep ic = new ICStep(IntermediateCode.Action.ADD, 2, 3);
-        int x2 = (int) ic.x2();
-        if (ic.x2() instanceof Integer) {
-            Integer x3 = ((Integer) ic.x2());
-        }
-    }
 }
