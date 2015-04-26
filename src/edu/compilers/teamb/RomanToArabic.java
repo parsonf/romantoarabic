@@ -3,6 +3,9 @@ package edu.compilers.teamb;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * Provides the specific rules for converting roman to arabic to the program.
+ */
 public class RomanToArabic {
 
     public static final String ERROR = "ERROR";
@@ -13,6 +16,11 @@ public class RomanToArabic {
     public static final String CMD_VERBOSE = "verbose";
     public static final String CMD_QUIET = "quiet";
 
+    /**
+     * Returns a list of valid tokens.
+     *
+     * @return a list of valid tokens.
+     */
     public static ArrayList<String> getValidTokens() {
         ArrayList<String> validTokens = new ArrayList<>();
         validTokens.add("I");
@@ -25,6 +33,11 @@ public class RomanToArabic {
         return validTokens;
     }
 
+    /**
+     * Represents the parse table for translating Roman to Arabic.
+     *
+     * @return the populated parse table.
+     */
     public static Hashtable<ParseTableCell, Production> getParseTable() {
 
         Hashtable<ParseTableCell, Production> parseTable = new Hashtable<>();

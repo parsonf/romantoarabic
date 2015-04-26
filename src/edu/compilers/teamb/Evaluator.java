@@ -3,22 +3,32 @@ package edu.compilers.teamb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import static edu.compilers.teamb.OutputInterface.outputVerbose;
 
+/**
+ * Receives intermediate code and evaluates it.
+ * The intermediate code is presumed to be a series of addition or subtraction commands.
+ */
 public class Evaluator {
-    private IntermediateCode ic;
     public static final String TAG = "Evaluator";
     private HashMap<String, Integer> registers;
 
+    /**
+     * Default Constructor.
+     */
     public Evaluator() {
-        //ic = new IntermediateCode();
         registers = new HashMap<>();
     }
 
-    public int evaluate(ArrayList<ICStep> _code) throws RomanTranslationException{
+    /**
+     * When called, receives an ordered list of intermediate code and
+     * returns the calculated result.
+     *
+     * @param _code the intermediate code to process.
+     * @return the calculated result.
+     */
+    public int evaluate(ArrayList<ICStep> _code) {
         int result;
         int currVal1;
         int currVal2;
@@ -49,7 +59,7 @@ public class Evaluator {
                 // terminal. so take its value.
                 currVal3 = step.getAdd3().getVal();
             } else { // rest are non-terminals.
-                // if this var1 is not in the register, add it.
+                // if this var3 is not in the register, add it.
                 if (!registers.containsKey(step.getAdd3().getName())) {
                     registers.put(step.getAdd3().getName(),step.getAdd3().getVal());
                 }
@@ -58,12 +68,12 @@ public class Evaluator {
 
             switch(step.getAction()) {
                 case ADD:
-                    outputVerbose(TAG, String.format("Adding %d to %d: %d", currVal2, currVal3, currVal1));
                     currVal1 = currVal2 + currVal3;
+                    outputVerbose(TAG, String.format("Adding %d to %d: %d", currVal2, currVal3, currVal1));
                     break;
                 case SUBTRACT:
-                    outputVerbose(TAG, String.format("Subtracting %d from %d: %d", currVal2, currVal3, currVal1));
                     currVal1 = currVal2 - currVal3;
+                    outputVerbose(TAG, String.format("Subtracting %d from %d: %d", currVal2, currVal3, currVal1));
                     break;
                 default:
                     //unknown
@@ -73,12 +83,11 @@ public class Evaluator {
         }
         result = registers.get("S");
 
-        Iterator it = registers.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            outputVerbose(TAG, String.format("%s = %s", pair.getKey(), Integer.toString((Integer)pair.getValue())));
-        }
-
         return result;
     }
+
+    /**
+     * The operations that can be performed by this class for each intermediate code instruction.
+     */
+    public enum Action { ADD, SUBTRACT }
 }

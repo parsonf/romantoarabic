@@ -8,6 +8,9 @@ import java.util.Stack;
 
 import static edu.compilers.teamb.OutputInterface.outputVerbose;
 
+/**
+ * Receives an ordered list of tokens and generates a parse tree.
+ */
 public class Parser {
     //Tag to identify the module
     public static final String TAG = "Parser";
@@ -20,12 +23,21 @@ public class Parser {
     //The cumulative parsed characters - for error handling
     private String parsed = "";
 
+    /**
+     * Default constructor.
+     */
     public Parser () {
         lexemes = new Stack<>();
         parseTree = new Node("S");
         parseTable = RomanToArabic.getParseTable();
     }
 
+    /**
+     * Receives ordered list of tokens and begins the parsing process.
+     *
+     * @param tokens the ordered list of tokens to process.
+     * @throws RomanTranslationException Thrown when a parsing error occurs.
+     */
     public void parse(ArrayList<Token> tokens) throws RomanTranslationException {
         lexemes.push(RomanToArabic.END_OF_INPUT);
         Collections.reverse(tokens);
@@ -36,6 +48,13 @@ public class Parser {
         parse(parseTree);
         outputVerbose(TAG, "Parse tree: " + parseTree);
     }
+
+    /**
+     * Recursive function that parses a node at a time with what lexemes remain.
+     *
+     * @param n the node to continue parsing on.
+     * @throws RomanTranslationException Thrown when the parsing process has led to an error in the parsing table.
+     */
     public void parse(Node n) throws RomanTranslationException {
         String lex = lexemes.peek();
         if (lex.equals(RomanToArabic.END_OF_INPUT)) {
@@ -68,7 +87,7 @@ public class Parser {
                 }
 
                 if (!aBody.isEmpty()) {
-                    if (aBody != RomanToArabic.ERROR)
+                    if (!aBody.equals(RomanToArabic.ERROR))
                         outputVerbose(TAG, String.format("Created node for %s.", aBody));
                     else
                         outputVerbose(TAG, String.format("Error found at %s for %s.", production.getHead(), lex));
@@ -83,8 +102,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns the parse tree.
+     *
+     * @return the parse tree.
+     */
     public Node getParseTree() { return parseTree; }
 
+    /**
+     * Handles processing of parsing errors.
+     */
     private void parseError()
     {
 

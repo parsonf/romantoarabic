@@ -5,6 +5,9 @@ import java.util.HashMap;
 
 import static edu.compilers.teamb.OutputInterface.outputVerbose;
 
+/**
+ * Receives Roman text, translates it to Arabic.
+ */
 public class Translator {
     public static final String TAG = "Translator";
 
@@ -18,6 +21,9 @@ public class Translator {
     private IntermediateCodeGenerator intermediateCodeGenerator;
     private Evaluator evaluator;
 
+    /**
+     * Default constructor.
+     */
     public Translator() {
         this.roman = "";
         this.arabic = 0;
@@ -27,11 +33,21 @@ public class Translator {
         evaluator = new Evaluator();
     }
 
+    /**
+     * Returns the arabic.
+     *
+     * @return the arabic.
+     */
     public String getArabic() {
         return Integer.toString(arabic);
     }
 
-    //Dereck Britton - changed public call to this directly
+    /**
+     * Translates roman to arabic.
+     *
+     * @param _roman the roman to translate.
+     * @throws RomanTranslationException Thrown when an exception with translation occurs.
+     */
     public void translate(String _roman) throws RomanTranslationException {
         //Saved class variable for usage later - its only use is for translation, currently.
         //Consider removal and using the passed string directly.

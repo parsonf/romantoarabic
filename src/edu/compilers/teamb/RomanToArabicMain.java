@@ -8,6 +8,9 @@ import java.util.regex.PatternSyntaxException;
 import static edu.compilers.teamb.OutputInterface.outputError;
 import static edu.compilers.teamb.OutputInterface.outputInfo;
 
+/**
+ * The command line interface for this program.
+ */
 public class RomanToArabicMain implements Runnable {
     private String input;
     private Translator translator;
@@ -15,6 +18,9 @@ public class RomanToArabicMain implements Runnable {
         input = "";
     }
 
+    /**
+     * Starting point of the program.  Called by main() method after starting a new thread.
+     */
     public void run() {
         startMessage();
         // main program loop
@@ -31,6 +37,11 @@ public class RomanToArabicMain implements Runnable {
         } while (!(input.equalsIgnoreCase(RomanToArabic.CMD_EXIT)));
     }
 
+    /**
+     * Processes a command.
+     *
+     * @param input the command to process.
+     */
     private void processCommand(String input) {
         String[] inputArray = input.split("\\s+");
         String argument = "";
@@ -57,6 +68,9 @@ public class RomanToArabicMain implements Runnable {
         }
     }
 
+    /**
+     * Prints a list of acceptable commands.
+     */
     private void printAcceptableCommands() {
         outputInfo("Here is a list of acceptable commands:");
         outputInfo(String.format("%-20s-  Converts Roman numerals to Arabic numerals.", String.format("%s [text]", RomanToArabic.CMD_TRANSLATE)));
@@ -65,22 +79,38 @@ public class RomanToArabicMain implements Runnable {
         outputInfo(String.format("%-20s-  Exits the program.", RomanToArabic.CMD_EXIT));
     }
 
+    /**
+     * Prints the start message.
+     */
     private void startMessage() {
         outputInfo("Welcome!");
         printAcceptableCommands();
     }
 
+    /**
+     * Outputs an error.
+     *
+     * @param _error The error to output.
+     */
     private void displayError(String _error)
     {
         outputError((!_error.isEmpty() ? _error : "Syntax error."));
         printAcceptableCommands();
     }
 
+    /**
+     * A generic syntax error. Convenience method.
+     */
     private void displayError()
     {
         displayError("");
     }
 
+    /**
+     * Handles processing of translating Roman to Arabic.
+     *
+     * @param _argument the presumably Roman text to translate.
+     */
     private void translateInput(String _argument)
     {
         if (_argument == null || _argument.isEmpty())
@@ -107,6 +137,11 @@ public class RomanToArabicMain implements Runnable {
         }
     }
 
+    /**
+     * The main() method.
+     *
+     * @param args Arguments sent to the program (ignored)
+     */
     public static void main(String[] args) {
         (new Thread(new RomanToArabicMain())).start();
     }
