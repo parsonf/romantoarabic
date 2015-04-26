@@ -1,8 +1,9 @@
 package edu.compilers.teamb;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static edu.compilers.teamb.OutputInterface.outputVerbose;
 
 public class Translator {
     public static final String TAG = "Translator";
@@ -25,14 +26,6 @@ public class Translator {
         intermediateCodeGenerator = new IntermediateCodeGenerator();
         evaluator = new Evaluator();
     }
-    /*
-    Dereck Britton - moved translate call to UI class for exception handling
-    public void translate(String roman) {
-        this.roman = roman;
-
-        translate();
-    }
-    */
 
     public String getArabic() {
         return Integer.toString(arabic);
@@ -45,44 +38,22 @@ public class Translator {
         this.roman = _roman;
         // perform lexical analysis
         try {
-            translationSteps.add("Invoking lexical analyzer.");
+            outputVerbose(TAG, "Invoking lexical analyzer.");
             lexicalAnalyzer.analyze(roman);
             // create a parse tree
-            translationSteps.add("Invoking parser.");
+            outputVerbose(TAG, "Invoking parser.");
             parser.parse(lexicalAnalyzer.getTokens());
             // generate intermediate code
-            translationSteps.add("Invoking IC generator.");
+            outputVerbose(TAG, "Invoking IC generator.");
             intermediateCodeGenerator.generate(parser.getParseTree());
             // evaluate by executing the intermediate code
-            translationSteps.add("Invoking evaluator.");
+            outputVerbose(TAG, "Invoking evaluator.");
             arabic = evaluator.evaluate(intermediateCodeGenerator.getCode());
         } catch (RomanTranslationException e) {
-            translationSteps.add(String.format("Error thrown from %s.", e.getAffectedModule()));
+            outputVerbose(TAG, String.format("Error thrown from %s.", e.getAffectedModule()));
             throw e;
         } catch (Exception ex) {
             throw new RomanTranslationException(TAG, ex.getMessage());
         }
-    }
-
-    public HashMap<String,ArrayList<String>> getAllTranslationSteps()
-    {
-        //Will be empty on first call, but if called successively, don't waste time.
-        if (allTranslationSteps.isEmpty())
-            populateAllTranslationSteps();
-
-        return allTranslationSteps;
-    }
-
-    private void populateAllTranslationSteps()
-    {
-        allTranslationSteps.put(TAG, translationSteps);
-        if (lexicalAnalyzer != null)
-            allTranslationSteps.put(LexicalAnalyzer.TAG, lexicalAnalyzer.getTranslationSteps());
-        if (parser != null)
-            allTranslationSteps.put(Parser.TAG, parser.getTranslationSteps());
-        if (intermediateCodeGenerator != null)
-            allTranslationSteps.put(IntermediateCodeGenerator.TAG, intermediateCodeGenerator.getTranslationSteps());
-        if (evaluator != null)
-            allTranslationSteps.put(Evaluator.TAG, evaluator.getTranslationSteps());
     }
 }

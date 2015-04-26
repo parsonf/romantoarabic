@@ -3,9 +3,10 @@ package edu.compilers.teamb;
 
 import java.util.ArrayList;
 
+import static edu.compilers.teamb.OutputInterface.outputVerbose;
+
 public class IntermediateCodeGenerator {
     public static final String TAG = "IC Generator";
-    private ArrayList<String> translationSteps = new ArrayList<>();
     private ArrayList<ICStep> code;
     private Node parseTree;
     private IntermediateCode intermediateCode;
@@ -20,9 +21,9 @@ public class IntermediateCodeGenerator {
         this.parseTree = _parseTree;
         traverse(_parseTree);
 
-        translationSteps.add("Intermediate code generated:");
+        outputVerbose(TAG,"Intermediate code generated:");
         for (ICStep step : code) {
-            translationSteps.add(step.toString());
+            outputVerbose(TAG, step.toString());
         }
     }
 
@@ -41,5 +42,4 @@ public class IntermediateCodeGenerator {
     public ArrayList<ICStep> getCode() {
         return code;
     }
-    public ArrayList<String> getTranslationSteps() { return translationSteps; }
 }
