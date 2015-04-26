@@ -10,9 +10,7 @@ import static edu.compilers.teamb.OutputInterface.outputInfo;
 
 public class RomanToArabicMain implements Runnable {
     private String input;
-    private boolean isVerbose = false;
     private Translator translator;
-
     public RomanToArabicMain() {
         input = "";
     }
@@ -22,7 +20,7 @@ public class RomanToArabicMain implements Runnable {
         // main program loop
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         do {
-            System.out.print("RtA> ");
+            outputInfo(RomanToArabic.INPUT_PROMPT);
             try {
                 input = br.readLine();
             } catch (IOException e) {
@@ -30,7 +28,7 @@ public class RomanToArabicMain implements Runnable {
                 continue;
             }
             processCommand(input);
-        } while (!(input.equalsIgnoreCase("exit")));
+        } while (!(input.equalsIgnoreCase(RomanToArabic.CMD_EXIT)));
     }
 
     private void processCommand(String input) {
@@ -40,18 +38,18 @@ public class RomanToArabicMain implements Runnable {
             argument = inputArray[1];
         }
         switch(inputArray[0].toLowerCase()) {
-            case "quiet":
+            case RomanToArabic.CMD_QUIET:
                 OutputInterface.isVerbose = false;
                 outputInfo("Output of translate set to quiet. Type 'verbose' to see verbose output.");
                 break;
-            case "verbose":
+            case RomanToArabic.CMD_VERBOSE:
                 OutputInterface.isVerbose = true;
                 outputInfo("Output of translate set to verbose. Type 'quiet' to see result only.");
                 break;
-            case "translate":
+            case RomanToArabic.CMD_TRANSLATE:
                 translateInput(argument);
                 break;
-            case "exit":
+            case RomanToArabic.CMD_EXIT:
                 outputInfo("Exiting program...");
                 break;
             default:
@@ -61,10 +59,10 @@ public class RomanToArabicMain implements Runnable {
 
     private void printAcceptableCommands() {
         outputInfo("Here is a list of acceptable commands:");
-        outputInfo("translate [text]  -  Converts Roman numerals to Arabic numerals.");
-        outputInfo("verbose           -  Sets the output of the translate command to display intermediate steps and the result.");
-        outputInfo("quiet             -  Sets the output of the translate command to only show the result.");
-        outputInfo("exit              -  Exits the program.");
+        outputInfo(String.format("%-20s-  Converts Roman numerals to Arabic numerals.", String.format("%s [text]", RomanToArabic.CMD_TRANSLATE)));
+        outputInfo(String.format("%-20s-  Sets the output of the translate command to display intermediate steps and the result.", RomanToArabic.CMD_VERBOSE));
+        outputInfo(String.format("%-20s-  Sets the output of the translate command to only show the result.", RomanToArabic.CMD_QUIET));
+        outputInfo(String.format("%-20s-  Exits the program.", RomanToArabic.CMD_EXIT));
     }
 
     private void startMessage() {

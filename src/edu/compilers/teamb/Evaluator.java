@@ -58,9 +58,11 @@ public class Evaluator {
 
             switch(step.getAction()) {
                 case ADD:
+                    outputVerbose(TAG, String.format("Adding %d to %d: %d", currVal2, currVal3, currVal1));
                     currVal1 = currVal2 + currVal3;
                     break;
                 case SUBTRACT:
+                    outputVerbose(TAG, String.format("Subtracting %d from %d: %d", currVal2, currVal3, currVal1));
                     currVal1 = currVal2 - currVal3;
                     break;
                 default:

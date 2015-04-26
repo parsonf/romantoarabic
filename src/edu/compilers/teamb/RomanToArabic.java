@@ -1,10 +1,17 @@
 package edu.compilers.teamb;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class RomanToArabic {
+
+    public static final String ERROR = "ERROR";
+    public static final String END_OF_INPUT = "$";
+    public static final String INPUT_PROMPT = "RtA> ";
+    public static final String CMD_EXIT = "exit";
+    public static final String CMD_TRANSLATE = "translate";
+    public static final String CMD_VERBOSE = "verbose";
+    public static final String CMD_QUIET = "quiet";
 
     public static ArrayList<String> getValidTokens() {
         ArrayList<String> validTokens = new ArrayList<>();
