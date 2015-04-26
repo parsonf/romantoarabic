@@ -14,7 +14,7 @@ public class ICStep {
         this.add3 = _add3;
     }
 
-    public IntermediateCode.Action action() {
+    public IntermediateCode.Action getAction() {
         return action;
     }
 

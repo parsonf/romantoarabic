@@ -49,7 +49,7 @@ public class RomanToArabic {
         parseTable.put(new ParseTableCell("t2","L"), new Production("t2",""));
         parseTable.put(new ParseTableCell("t2","C"), new Production("t2",""));
         parseTable.put(new ParseTableCell("t2","D"), new Production("t2",""));
-        parseTable.put(new ParseTableCell("t2","M"), new Production("t2","M", new int[]{1000}));
+        parseTable.put(new ParseTableCell("t2","M"), new Production("t2","M t3", new int[]{1000, 0}));
         parseTable.put(new ParseTableCell("t2","$"), new Production("t2",""));
 
         // row t3
