@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static edu.compilers.teamb.OutputInterface.outputVerbose;
+
 public class Evaluator {
     private IntermediateCode ic;
     public static final String TAG = "Evaluator";
-    private ArrayList<String> translationSteps = new ArrayList<>();
     private HashMap<String, Integer> registers;
 
     public Evaluator() {
@@ -23,6 +24,7 @@ public class Evaluator {
         int currVal2;
         int currVal3;
 
+        outputVerbose(TAG, "Evaluating code...");
         for (ICStep step : _code) {
 
             // add1 is never a terminal, so no need to check for that.
@@ -31,7 +33,6 @@ public class Evaluator {
                 registers.put(step.getAdd1().getName(),step.getAdd1().getVal());
             }
             currVal1 = registers.get(step.getAdd1().getName());
-
 
             if (step.getAdd2().getName().matches("M|D|C|L|X|V|I")) {
                 // terminal. so take its value.
@@ -73,11 +74,9 @@ public class Evaluator {
         Iterator it = registers.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            translationSteps.add(pair.getKey() + " = " + Integer.toString((Integer)pair.getValue()));
+            outputVerbose(TAG, String.format("%s = %s", pair.getKey(), Integer.toString((Integer)pair.getValue())));
         }
 
         return result;
     }
-
-    public ArrayList<String> getTranslationSteps() { return translationSteps; }
 }
