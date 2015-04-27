@@ -63,10 +63,7 @@ public class RomanToArabicMain implements Runnable {
                 outputInfo("Exiting program...");
                 break;
             case RomanToArabic.CMD_TEST:
-                runRandomTest(argument);
-                break;
-            case RomanToArabic.CMD_TEST_SEQUENTIAL:
-                runSequentialTest();
+                runTest(inputArray);
                 break;
             default:
                 displayError();
@@ -142,6 +139,48 @@ public class RomanToArabicMain implements Runnable {
         }
     }
 
+    private void runTest(String[] _args)
+    {
+        String testType;
+
+        switch(_args.length)
+        {
+            case 2:
+            case 3:
+                testType = _args[1];
+                break;
+            default:
+                displayError();
+                return;
+        }
+
+        switch(testType)
+        {
+            case RomanToArabic.PARM_TEST_RANDOM:
+                if (_args.length <= 2) {
+                    displayError();
+                    return;
+                }
+                runRandomTest(_args[2]);
+                break;
+            case RomanToArabic.PARM_TEST_SEQUENTIAL:
+                runSequentialTest();
+                break;
+            case RomanToArabic.PARM_TEST_INVALID:
+                runInvalidTest();
+                break;
+            case RomanToArabic.CMD_VERBOSE:
+                isTestVerbose = true;
+                break;
+            case RomanToArabic.CMD_QUIET:
+                isTestVerbose = false;
+                break;
+            default:
+                displayError();
+                break;
+        }
+    }
+
     /**
      * Runs a test a specified number of times (for now, just valid translation).
      * @param _argument the amount of times to run the test.
@@ -162,6 +201,12 @@ public class RomanToArabicMain implements Runnable {
     {
         TestValidConversion test = new TestValidConversion();
         test.testSequentialConvert();
+    }
+
+    private void runInvalidTest()
+    {
+        TestInvalidConversion test = new TestInvalidConversion();
+        test.testInvalidConversion();
     }
 
     /**

@@ -2,13 +2,13 @@ package edu.compilers.teamb;
 
 import java.util.*;
 
-import static edu.compilers.teamb.OutputInterface.testOutputFail;
-import static edu.compilers.teamb.OutputInterface.testOutputPass;
+import static edu.compilers.teamb.OutputInterface.*;
 
 /**
  * This class is designed to test the valid Roman to Arabic functionality of the program.
  */
 public class TestValidConversion {
+    public static final String TAG = "Valid conversion";
     private ArrayList<Integer> randomNumbers;
     private HashMap<String, Integer> romanNumbers;
     private Random random = new Random();
@@ -37,6 +37,7 @@ public class TestValidConversion {
         {
             String roman = a2r.getRoman(i);
             Integer result = translate(roman);
+            testOutputVerbose(TAG, String.format("Translated [%s] to %d - expected %d.", roman, result, i));
             if (!Objects.equals(result, i)) {
                 outputFail(roman, result, i);
                 failure = true;
@@ -76,6 +77,7 @@ public class TestValidConversion {
     private void runTest(){
         Iterator romIter = romanNumbers.entrySet().iterator();
         Map.Entry<String, Integer> keyVal;
+        boolean failure = false;
 
         while(romIter.hasNext())
         {
@@ -85,13 +87,22 @@ public class TestValidConversion {
             Integer expected = keyVal.getValue();
             Integer result = translate(roman);
             if (Objects.equals(result, keyVal.getValue()))
-                outputPass(roman, result, expected);
-            else
+                testOutputVerbose(TAG, String.format("Translated [%s] to %d - expected %d.", roman, result, expected));
+            else {
                 outputFail(roman, result, expected);
-
+                failure = true;
+            }
         }
+
+        if (!failure)
+            testOutputPass("All tests passed!");
     }
 
+    /**
+     * Invokes the translation module to translate the given roman numeral.
+     * @param _roman - the roman numeral to translate
+     * @return - the integer equivalent
+     */
     private Integer translate(String _roman)
     {
         Translator translator = new Translator();
@@ -107,11 +118,13 @@ public class TestValidConversion {
         return ret;
     }
 
+    /**
+     * Outputs a failure message.
+     * @param _input - The input to the translator
+     * @param _output - The result from the translator
+     * @param _expected - The expected result
+     */
     private void outputFail(String _input, Integer _output, Integer _expected){
         testOutputFail(String.format("[%s] converted to [%d] - expected [%d].", _input, _output, _expected));
-    }
-
-    private void outputPass(String _input, Integer _output, Integer _expected){
-        testOutputPass(String.format("Converted [%s] to [%d] - expected [%d] - success!", _input, _output, _expected));
     }
 }

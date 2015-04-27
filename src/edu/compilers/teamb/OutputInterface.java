@@ -9,6 +9,10 @@ public class OutputInterface{
      */
     public static boolean isVerbose = false;
     /**
+     * Whether verbose for test commands is enabled or not.
+     */
+    public static boolean isTestVerbose = false;
+    /**
      * Default ANSI terminal color - revert to this if the color is changed.
      */
     public static final String ANSI_DEFAULT = "\u001B[0m";
@@ -74,6 +78,16 @@ public class OutputInterface{
      */
     public static void testOutputFail(String _output){
         System.out.println(String.format("%s%s%s", ANSI_FAIL, _output, ANSI_DEFAULT));
+    }
+
+    /**
+     * Outputs verbose test messages.
+     * @param _tag the tag for the class
+     * @param _output what to output
+     */
+    public static void testOutputVerbose(String _tag, String _output){
+        if (isTestVerbose)
+            System.out.println(String.format("%s[%s]: %s%s", ANSI_VERBOSE, _tag, _output, ANSI_DEFAULT));
     }
 }
 
