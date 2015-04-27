@@ -100,6 +100,13 @@ public class Parser {
                 parse(child);
             }
         }
+        // S has finished parsing it's children...
+        // now we check if we are at the root node and if the lexeme stack is not empty. if so, error.
+        if(n == parseTree && !lexemes.peek().equals(RomanToArabic.END_OF_INPUT)) {
+            Integer errorPosition = parsed.length()+1;
+            parseError();
+            throw new RomanTranslationException(TAG, String.format("Parsing error at position %s: %s.", errorPosition, parsed));
+        }
     }
 
     /**
