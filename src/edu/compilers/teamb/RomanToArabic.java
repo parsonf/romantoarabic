@@ -193,7 +193,7 @@ public class RomanToArabic {
         parseTable.put(new ParseTableCell("ones","$"), new Production("ones",""));
 
         // row k2
-        parseTable.put(new ParseTableCell("k2","I"), new Production("k2","I", new int[]{1}));
+        parseTable.put(new ParseTableCell("k2","I"), new Production("k2","I k3", new int[]{1, 0}));
         parseTable.put(new ParseTableCell("k2","V"), new Production("k2","V", new int[]{3}));
         parseTable.put(new ParseTableCell("k2","X"), new Production("k2","X", new int[]{8}));
         parseTable.put(new ParseTableCell("k2","L"), new Production("k2","ERROR"));
