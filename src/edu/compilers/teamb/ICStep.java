@@ -68,9 +68,9 @@ public class ICStep {
     @Override
     public String toString() {
         String s = "";
-        s += add1.getName() + "." + Integer.toString(add1.getVal()) + " = ";
-        s += add2.getName() + "." + Integer.toString(add2.getVal()) + " + ";
-        s += add3.getName() + "." + Integer.toString(add3.getVal());
+        s += add1.getName() + ".val = ";
+        s += add2.getName() + ".val + ";
+        s += add3.getName() + ".val";
 
         return s;
     }
