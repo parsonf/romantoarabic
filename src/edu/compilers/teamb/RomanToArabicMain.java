@@ -63,6 +63,9 @@ public class RomanToArabicMain implements Runnable {
             case RomanToArabic.CMD_EXIT:
                 outputInfo("Exiting program...");
                 break;
+            case RomanToArabic.CMD_TEST:
+                runTest(argument);
+                break;
             default:
                 displayError();
         }
@@ -126,7 +129,7 @@ public class RomanToArabicMain implements Runnable {
                     translator = new Translator();
                     outputInfo(String.format("Translating {%s} to Arabic numeral...", _argument));
                     translator.translate(_argument);
-                    outputInfo(String.format("Result: %s", translator.getArabic()));
+                    outputInfo(String.format("Result: %d", translator.getArabic()));
                 }
             } catch (PatternSyntaxException ex)
             {
@@ -134,6 +137,22 @@ public class RomanToArabicMain implements Runnable {
             } catch (RomanTranslationException e) {
                 displayError(String.format("Error in %s module: %s", e.getAffectedModule(), e.getMessage()));
             }
+        }
+    }
+
+    /**
+     * Runs a test a specified number of times (for now, just valid translation).
+     * @param _argument the amount of times to run the test.
+     */
+    private void runTest(String _argument)
+    {
+        try{
+            Integer iterations = Integer.parseInt(_argument);
+            TestValidConversion test = new TestValidConversion();
+            test.testConvert(iterations);
+        }
+        catch (NumberFormatException e){
+            outputError(String.format("Invalid number of iterations [%s].", _argument));
         }
     }
 

@@ -15,6 +15,7 @@ public class RomanToArabic {
     public static final String CMD_TRANSLATE = "translate";
     public static final String CMD_VERBOSE = "verbose";
     public static final String CMD_QUIET = "quiet";
+    public static final String CMD_TEST = "test";
 
     /**
      * Returns a list of valid tokens.

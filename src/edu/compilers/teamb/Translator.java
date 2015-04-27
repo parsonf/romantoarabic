@@ -38,8 +38,8 @@ public class Translator {
      *
      * @return the arabic.
      */
-    public String getArabic() {
-        return Integer.toString(arabic);
+    public Integer getArabic() {
+        return arabic;
     }
 
     /**
