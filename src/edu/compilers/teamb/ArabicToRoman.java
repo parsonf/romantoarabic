@@ -2,9 +2,16 @@ package edu.compilers.teamb;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * This class is used to convert an Arabic number to a Roman Numeral.
+ * It is instanced so the list doesn't have to be rebuilt in repeated successive calls.
+ */
 public class ArabicToRoman {
     private LinkedHashMap<String, Integer> rNumbers = new LinkedHashMap<>();
 
+    /**
+     * Constructor: populate the translation list with values
+      */
     public ArabicToRoman()
     {
         rNumbers.put("M", 1000);
@@ -22,6 +29,11 @@ public class ArabicToRoman {
         rNumbers.put("I", 1);
     }
 
+    /**
+     * Convert the given Integer to a String that represents a Roman Numeral.
+     * @param _arabic - the number to convert.
+     * @return - the String representing the Roman Numeral.
+     */
     public String getRoman(Integer _arabic)
     {
         String ret = "";

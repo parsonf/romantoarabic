@@ -35,6 +35,12 @@ public class OutputInterface{
     }
 
     /**
+     * Outputs the RtA prompt
+     */
+    public static void outputPrompt() {
+        System.out.print(RomanToArabic.INPUT_PROMPT);
+    }
+    /**
      * Outputs error messages.
      *
      * @param _output the error to output.

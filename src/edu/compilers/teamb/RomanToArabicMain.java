@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.regex.PatternSyntaxException;
 
-import static edu.compilers.teamb.OutputInterface.outputError;
-import static edu.compilers.teamb.OutputInterface.outputInfo;
+import static edu.compilers.teamb.OutputInterface.*;
 
 /**
  * The command line interface for this program.
@@ -26,7 +25,7 @@ public class RomanToArabicMain implements Runnable {
         // main program loop
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         do {
-            outputInfo(RomanToArabic.INPUT_PROMPT);
+            outputPrompt();
             try {
                 input = br.readLine();
             } catch (IOException e) {
@@ -64,7 +63,10 @@ public class RomanToArabicMain implements Runnable {
                 outputInfo("Exiting program...");
                 break;
             case RomanToArabic.CMD_TEST:
-                runTest(argument);
+                runRandomTest(argument);
+                break;
+            case RomanToArabic.CMD_TEST_SEQUENTIAL:
+                runSequentialTest();
                 break;
             default:
                 displayError();
@@ -144,16 +146,22 @@ public class RomanToArabicMain implements Runnable {
      * Runs a test a specified number of times (for now, just valid translation).
      * @param _argument the amount of times to run the test.
      */
-    private void runTest(String _argument)
+    private void runRandomTest(String _argument)
     {
         try{
             Integer iterations = Integer.parseInt(_argument);
             TestValidConversion test = new TestValidConversion();
-            test.testConvert(iterations);
+            test.testRandomConvert(iterations);
         }
         catch (NumberFormatException e){
             outputError(String.format("Invalid number of iterations [%s].", _argument));
         }
+    }
+
+    private void runSequentialTest()
+    {
+        TestValidConversion test = new TestValidConversion();
+        test.testSequentialConvert();
     }
 
     /**
