@@ -8,19 +8,43 @@ import java.util.Map;
 import static edu.compilers.teamb.OutputInterface.*;
 
 public class TestInvalidConversion {
+    /**
+     * The TAG for the class (used for output)
+     */
     public static final String TAG = "Invalid Test";
+    /**
+     * A list of invalid Roman Numerals to test
+     */
     private ArrayList<String> badRoman;
+    /**
+     * Used to iterate the parse table
+     */
     private Hashtable<ParseTableCell, Production> parseTable;
+    /**
+     * A list of the top level productions
+     */
     private ArrayList<String> topLevelProds;
+    /**
+     * A list of known valid combinations
+     */
     private ArrayList<String> validExceptions;
+    /**
+     * Used to concatenate invalid Roman Numerals for testing
+     */
     private String badRomanBuild;
+    /**
+     * Used to keep track of how many failures there were
+     */
     private Integer failedCount = 0;
 
     public TestInvalidConversion()
     {
         parseTable = RomanToArabic.getParseTable();
         badRoman = new ArrayList<>();
-
+        /**
+         * Load known valid combinations that reverse iteration from the parse tree
+         * may show as invalid.
+         */
         validExceptions = new ArrayList<>();
         validExceptions.add("IV");
         validExceptions.add("IX");
@@ -36,11 +60,17 @@ public class TestInvalidConversion {
         topLevelProds.add("thousands");
     }
 
+    /**
+     * This method is the entry point for this test
+     */
     public void testInvalidConversion(){
         iterateParseTable();
         iterateBadRomans();
     }
 
+    /**
+     * Iterates through the accumulated invalid Roman Numerals and tests them.
+     */
     private void iterateBadRomans()
     {
         for(String bad : badRoman)
@@ -61,6 +91,9 @@ public class TestInvalidConversion {
             testOutputFail(String.format("%d bad combinations were tested, but %d failed.", badRoman.size(), failedCount));
     }
 
+    /**
+     * Get all of the productions that are ERROR
+     */
     private void iterateParseTable(){
         ParseTableCell cell;
         Production prod;
@@ -78,6 +111,11 @@ public class TestInvalidConversion {
         }
     }
 
+    /**
+     * Recursively back-track through the parse table to find invalid combinations - very rough draft
+     * @param _ptc - the current parse table cell
+     * @param _prod - the current production
+     */
     private void findInvalid(ParseTableCell _ptc, Production _prod)
     {
         //If the production has a nonterminal, add the current string to the list
@@ -115,12 +153,15 @@ public class TestInvalidConversion {
         }
     }
 
+    /**
+     * Add an invalid combination to the list to be tested.
+     */
     private void addToBadRomans()
     {
         String toAdd = new StringBuilder(badRomanBuild).reverse().toString();
         if (!validExceptions.contains(toAdd)) {
             badRoman.add(toAdd);
-            outputVerbose(TAG, String.format("Added %s to list of bad Numbers.", toAdd));
+            testOutputVerbose(TAG, String.format("Added %s to list of bad Numbers.", toAdd));
         }
     }
 }

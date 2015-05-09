@@ -37,6 +37,15 @@ public class RomanToArabicMain implements Runnable {
     }
 
     /**
+     * The main() method.
+     *
+     * @param args Arguments sent to the program (ignored)
+     */
+    public static void main(String[] args) {
+        (new Thread(new RomanToArabicMain())).start();
+    }
+
+    /**
      * Processes a command.
      *
      * @param input the command to process.
@@ -121,7 +130,7 @@ public class RomanToArabicMain implements Runnable {
         {
             try {
                 if (!_argument.matches("(M|D|C|L|X|V|I)+"))
-                    displayError("Translate requires the second character to be a Roman numeral.");
+                    displayError("Translate requires the second parameter to be a Roman numeral.");
                 else
                 {
                     //re-instantiate to avoid cleanup
@@ -139,6 +148,10 @@ public class RomanToArabicMain implements Runnable {
         }
     }
 
+    /**
+     * Takes the given arguments and executes the desired test.
+     * @param _args - the argument array - arguments delimited by space
+     */
     private void runTest(String[] _args)
     {
         String testType;
@@ -197,24 +210,24 @@ public class RomanToArabicMain implements Runnable {
         }
     }
 
+    /**
+     * Iterates from 1 to 3999 to test every possible combination.
+     */
     private void runSequentialTest()
     {
         TestValidConversion test = new TestValidConversion();
         test.testSequentialConvert();
     }
 
+    /**
+     * Reverse engineers parse tree to find invalid combinations and tests each to ensure
+     * that they fail.
+     */
     private void runInvalidTest()
     {
         TestInvalidConversion test = new TestInvalidConversion();
         test.testInvalidConversion();
     }
 
-    /**
-     * The main() method.
-     *
-     * @param args Arguments sent to the program (ignored)
-     */
-    public static void main(String[] args) {
-        (new Thread(new RomanToArabicMain())).start();
-    }
+
 }
