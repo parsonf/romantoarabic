@@ -1,8 +1,5 @@
 package edu.compilers.teamb;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import static edu.compilers.teamb.OutputInterface.outputVerbose;
 
 /**
@@ -11,8 +8,6 @@ import static edu.compilers.teamb.OutputInterface.outputVerbose;
 public class Translator {
     public static final String TAG = "Translator";
 
-    private HashMap<String,ArrayList<String>> allTranslationSteps = new HashMap<>();
-    private ArrayList<String> translationSteps = new ArrayList<>();
     private String roman;
     private int arabic;
 
@@ -49,8 +44,6 @@ public class Translator {
      * @throws RomanTranslationException Thrown when an exception with translation occurs.
      */
     public void translate(String _roman) throws RomanTranslationException {
-        //Saved class variable for usage later - its only use is for translation, currently.
-        //Consider removal and using the passed string directly.
         this.roman = _roman;
         // perform lexical analysis
         try {
